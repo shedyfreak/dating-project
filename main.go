@@ -10,10 +10,7 @@ import (
 	"github.com/perso-proj/templates"
 
 	"github.com/gorilla/mux"
-	_ "github.com/lib/pq"
 )
-
-var GlobalDB *sqlx.DB
 
 type handler struct {
 	db *sqlx.DB
@@ -44,29 +41,6 @@ func main() {
 	}
 
 	hdler := handler{db: GlobalDB}
-	// // Query the database
-	// rows, err := GlobalDBb.Query("SELECT id, name FROM events")
-	// if err != nil {
-	// 	log.Fatal("Error executing query:", err)
-	// }
-	// defer rows.Close()
-
-	// // Iterate over rows and display the result
-	// for rows.Next() {
-	// 	var id int
-	// 	var name string
-	// 	err = rows.Scan(&id, &name)
-	// 	if err != nil {
-	// 		log.Fatal("Error scanning row:", err)
-	// 	}
-	// 	fmt.Printf("ID: %d, Name: %s\n", id, name)
-	// }
-
-	// // Check for any error encountered during iteration
-	// err = rows.Err()
-	// if err != nil {
-	// 	log.Fatal("Error iterating over rows:", err)
-	// }
 	initRouter(hdler)
 
 }
@@ -83,7 +57,7 @@ func initRouter(h handler) {
 	fmt.Println("Starting server on :8080...")
 	err := http.ListenAndServe(":8080", r)
 	if err != nil {
-		log.Fatal("cannot init database, reason -> %s", err.Error())
+		log.Fatal("cannot init server, reason -> %s", err.Error())
 		panic("db failure")
 	}
 }

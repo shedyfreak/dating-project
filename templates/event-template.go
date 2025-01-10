@@ -1,5 +1,25 @@
 package templates
 
+const allEvsTempl = ` <!-- Upcoming Events Section -->
+    <section class="px-4 py-16 bg-white">
+      <div class="container mx-auto">
+        <h2 class="text-3xl font-bold text-center mb-12">Upcoming Events</h2>
+        <div 
+          class="grid md:grid-cols-3 gap-8" >
+          <div class="text-center col-span-3">
+           <!-- BEGIN upcoming events Placeholder -->
+            <div 
+            hx-get="/api/events" 
+            hx-trigger="load" 
+            hx-target="this" 
+            hx-swap="innerHTML" >
+            </div>
+            <!-- END upcoming events Placeholder -->
+          </div>
+        </div>
+      </div>
+    </section>`
+
 const EventTempl = `
 <div class="border rounded-lg p-6 shadow-md">
   <h3 class="font-semibold text-xl mb-4">{{.Name}}</h3>
@@ -14,7 +34,7 @@ const EventTempl = `
       <svg class="h-4 w-4 text-pink-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-9a9 9 0 11-18 0 9 9 0 0118 0z" />
       </svg>
-      <span>7:00 PM - 10:00 PM</span>
+      <span>{{.Time}}</span>
     </div>
     <div class="flex items-center gap-2">
       <svg class="h-4 w-4 text-pink-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">

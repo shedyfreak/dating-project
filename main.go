@@ -30,6 +30,11 @@ func (h *handler) eventsHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, res)
 }
 
+func (h *handler) eventsOptions(w http.ResponseWriter, r *http.Request) {
+	events := database.GetEvents(h.db)
+	res := templates.GetOptionsEvent(events)
+	fmt.Fprintf(w, res)
+}
 func main() {
 
 	GlobalDB, err := database.DBinit()
@@ -72,6 +77,7 @@ func initRouter(h handler) {
 	// Define routes
 	r.HandleFunc("/", h.homeHandler).Methods("GET")
 	r.HandleFunc("/api/events", h.eventsHandler).Methods("GET")
+	r.HandleFunc("/api/event-opts", h.eventsOptions).Methods("GET")
 
 	// Start the server
 	fmt.Println("Starting server on :8080...")

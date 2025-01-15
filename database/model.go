@@ -13,6 +13,7 @@ type Event struct {
 	Price       float32  `db:"price"`
 	Description string   `db:"description"`
 	Icon        string   `db:"icon"`
+	MapsLink    string   `db:"maps_link"`
 }
 
 type DateOnly time.Time // Alias for time.Time to represent a date only

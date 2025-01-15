@@ -1,6 +1,6 @@
 package templates
 
-const RegisterTmpl = ` <!-- Reserve Spot Section -->
+const registerTmpl = ` <!-- Reserve Spot Section -->
 <section class="px-4 py-16">
   <div class="container mx-auto max-w-xl">
     <div class="border rounded-lg p-6 shadow-md">
@@ -14,7 +14,6 @@ const RegisterTmpl = ` <!-- Reserve Spot Section -->
           <label for="event" class="block text-sm font-medium text-gray-700">Pick an Event</label>
           <select id="event" name="event" required 
             class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500" 
-            hx-get="/api/event-opts"
             hx-get="/api/event-opts" 
             hx-trigger="load" 
             hx-target="#event" 

@@ -7,21 +7,21 @@ const descriptionTempl = ` <!-- description Section -->
         <svg class="mr-2 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
         </svg>
-        Join our next event
+        Rejoins notre prochain événement
       </div>
       <h1 class="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">
-        Find Your Perfect Match
+        Trouve Ton Match Parfait
       </h1>
       <p class="text-lg md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-        Join us for an evening of meaningful connections, laughter, and the possibility of finding that special someone.
-        Our curated dating events bring together like-minded individuals in a comfortable setting.
+        Rejoignez-nous pour une soirée de connexions authentiques, de rires et peut-être la chance de trouver ta personne spéciale.
+        Nos événements de dating soigneusement organisés rassemblent des personnes partageant les mêmes valeurs dans une ambiance conviviale.
       </p>
       <div class="flex flex-wrap justify-center gap-4 mb-12">
         <div class="flex items-center gap-2 text-gray-600">
           <svg class="h-5 w-5 text-pink-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3M16 7V3M5 11h14M5 19h14m-7-8h.01" />
           </svg>
-          <span>February 14, 2024</span>
+          <span>Mars 01, 2025</span>
         </div>
         <div class="flex items-center gap-2 text-gray-600">
           <svg class="h-5 w-5 text-pink-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -33,7 +33,7 @@ const descriptionTempl = ` <!-- description Section -->
           <svg class="h-5 w-5 text-pink-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 10.5a8.38 8.38 0 01-.9 3.8l-3.9 7a2 2 0 01-3.6 0l-3.9-7A8.38 8.38 0 013 10.5C3 5.81 7.03 2 12 2s9 3.81 9 8.5z" />
           </svg>
-          <span>The Grand Hotel, Downtown</span>
+          <span>Pink Crocodilo Bienne</span>
         </div>
       </div>
     </div>

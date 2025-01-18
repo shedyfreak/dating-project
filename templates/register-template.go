@@ -4,14 +4,14 @@ const registerTmpl = ` <!-- Reserve Spot Section -->
 <section class="px-4 py-16">
   <div class="container mx-auto max-w-xl">
     <div class="border rounded-lg p-6 shadow-md">
-      <h2 class="text-2xl font-bold text-center mb-6">Reserve Your Spot</h2>
+      <h2 class="text-2xl font-bold text-center mb-6">Reservez Votre Place</h2>
       <form 
         class="space-y-6" 
         hx-post="/api/register"
         hx-trigger="submit"
 		    hx-swap="none">
         <div class="space-y-2">
-          <label for="event" class="block text-sm font-medium text-gray-700">Pick an Event</label>
+          <label for="event" class="block text-sm font-medium text-gray-700">Choisis un évenement</label>
           <select id="event" name="event" required 
             class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500" 
             hx-get="/api/event-opts" 
@@ -25,12 +25,12 @@ const registerTmpl = ` <!-- Reserve Spot Section -->
         
         <div class="grid grid-cols-2 gap-4">
           <div class="space-y-2">
-            <label for="first-name" class="block text-sm font-medium text-gray-700">First name</label>
-            <input id="first-name" name="first_name" type="text" placeholder="John" required class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500" />
+            <label for="first-name" class="block text-sm font-medium text-gray-700">Prénom</label>
+            <input id="first-name" name="first_name" type="text" placeholder="Votre Prénom" required class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500" />
           </div>
           <div class="space-y-2">
-            <label for="last-name" class="block text-sm font-medium text-gray-700">Last name</label>
-            <input id="last-name" name="last_name" type="text" placeholder="Doe" required class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500" />
+            <label for="last-name" class="block text-sm font-medium text-gray-700">Nom de famille</label>
+            <input id="last-name" name="last_name" type="text" placeholder="Votre Nom de famille" required class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500" />
           </div>
         </div>
         
@@ -40,17 +40,24 @@ const registerTmpl = ` <!-- Reserve Spot Section -->
         </div>
         
         <div class="space-y-2">
-          <label for="phone" class="block text-sm font-medium text-gray-700">Phone number</label>
+          <label for="phone" class="block text-sm font-medium text-gray-700">Numéro de téléphone</label>
           <input id="phone" name="phone" type="tel" placeholder="+41 12 345 4567" required class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500" />
         </div>
-        
         <div class="space-y-2">
-          <label for="about" class="block text-sm font-medium text-gray-700">Tell us about yourself</label>
-          <textarea id="about" name="about" placeholder="Share a bit about your interests and what you're looking for..." rows="3" class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500"></textarea>
-        </div>
-        
+          <label for="birthdate" class="block text-sm font-medium text-gray-700">
+    Birthdate
+  </label>
+  <input 
+    id="birthdate" 
+    name="Date de naissance" 
+    type="date" 
+    placeholder="YYYY-MM-DD" 
+    required 
+    class="block w-full border-gray-300 rounded-md shadow-sm focus:ring-pink-500 focus:border-pink-500 placeholder-gray-400 text-gray-700"
+  />
+</div>  
         <button type="submit" class="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50">
-          Register Now
+          Réserver ma place
         </button>
       </form>
     </div>

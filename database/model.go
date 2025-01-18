@@ -5,15 +5,16 @@ import (
 )
 
 type Event struct {
-	ID          uint     `db:"id"`
-	Name        string   `db:"name"`
-	Location    string   `db:"location"`
-	Date        DateOnly `db:"date"` // Implemets String() for tmpl
-	Time        TimeOnly `db:"time"` // Implemets String() for tmpl
-	Price       float32  `db:"price"`
-	Description string   `db:"description"`
-	Icon        string   `db:"icon"`
-	MapsLink    string   `db:"maps_link"`
+	ID           uint     `db:"id"`
+	Name         string   `db:"name"`
+	Location     string   `db:"location"`
+	Date         DateOnly `db:"date"` // Implemets String() for tmpl
+	Time         TimeOnly `db:"time"` // Implemets String() for tmpl
+	Price        float32  `db:"price"`
+	Description  string   `db:"description"`
+	Icon         string   `db:"icon"`
+	MapsLink     string   `db:"maps_link"`
+	MaxSubsCount int      `db:"max_subs_count"`
 }
 
 type DateOnly time.Time // Alias for time.Time to represent a date only

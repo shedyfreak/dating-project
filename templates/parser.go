@@ -34,8 +34,8 @@ func GetOptionsEvent(events []database.Event) string {
 	}
 	tpl := `<option value="%d">{{.Date}} - {{.Name}} </option>`
 	eventsHtml := ""
-	for i, event := range events {
-		tpl = fmt.Sprintf(`<option value="%d">{{.Date}} - {{.Name}} </option>`, i)
+	for _, event := range events {
+		tpl = fmt.Sprintf(`<option value="%d">{{.Date}} - {{.Name}} </option>`, event.ID)
 		tmpl, err := template.New("name").Parse(tpl)
 		if err != nil {
 			log.Fatal("Failed to parse event template")

@@ -1,6 +1,8 @@
 package templates
 
-const descriptionTempl = ` <!-- description Section -->
+const descriptionTempl = ` 
+
+<!-- description Section -->
   <section class="px-4 py-20 md:py-32">
     <div class="container mx-auto text-center">
       <div class="inline-flex items-center justify-center rounded-full bg-pink-100 px-3 py-1 text-sm text-pink-700 mb-8">

@@ -1,7 +1,7 @@
 package templates
 
 const headertmpl = `
-<head>
+<head class="bg-gradient-to-r from-pink-500 to-rose-500 text-white shadow-md">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dating Event</title>

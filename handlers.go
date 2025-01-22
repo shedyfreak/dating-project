@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"strconv"
+	"time"
 
 	"github.com/jmoiron/sqlx"
 	"github.com/perso-proj/database"
@@ -23,7 +25,6 @@ func (h *handler) homeHandler(w http.ResponseWriter, r *http.Request) {
 func (h *handler) eventsHandler(w http.ResponseWriter, r *http.Request) {
 	events := database.GetEvents(h.db)
 	res := templates.ParseEvents(events)
-	fmt.Println(res)
 
 	fmt.Fprintf(w, res)
 }
@@ -48,14 +49,28 @@ func (h *handler) registrationHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Retrieve form values
-	event := r.FormValue("event")
+	eventID := r.FormValue("event")
 	firstName := r.FormValue("first_name")
-	lastName := r.FormValue("last_name")
+	familyName := r.FormValue("last_name")
 	email := r.FormValue("email")
 	phone := r.FormValue("phone")
+	birthdate := r.FormValue("birthdate")
+	parsedTime, err := time.Parse(time.DateOnly, birthdate)
+	if err != nil {
+		log.Fatalln("Error parsing date:", err)
+	}
+	subscriber := database.Subsriber{
+		FirstName:   firstName,
+		FamilyName:  familyName,
+		Email:       email,
+		PhoneNumber: phone,
+		Birthday:    database.DateOnly(parsedTime),
+	}
+	err, subID := database.SaveSubscriber(h.db, subscriber)
+	if err != nil {
+		fmt.Fprint(w, "something went wrong contac ADMIN")
+	}
 
-	fmt.Println("Received: Event=%s, FirstName=%s, LastName=%s, Email=%s, Phone=%s",
-		event, firstName, lastName, email, phone)
 	domain := "http://localhost:8080"
 	params := &stripe.CheckoutSessionParams{
 		LineItems: []*stripe.CheckoutSessionLineItemParams{
@@ -75,7 +90,12 @@ func (h *handler) registrationHandler(w http.ResponseWriter, r *http.Request) {
 		log.Printf("session.New: %v", err)
 	}
 
-	fmt.Println(s.ID)
+	evID, err := strconv.Atoi(eventID)
+	if err != nil {
+		fmt.Fprint(w, "something went wrong contac ADMIN")
+	}
+
+	database.SaveTempSubscription(h.db, uint(evID), subID, s.ID)
 	w.Header().Set("HX-Redirect", s.URL)
 	w.WriteHeader(http.StatusSeeOther)
 
@@ -83,9 +103,12 @@ func (h *handler) registrationHandler(w http.ResponseWriter, r *http.Request) {
 
 func (h *handler) success(w http.ResponseWriter, r *http.Request) {
 	sID := r.URL.Query().Get("session_id")
-	fmt.Println(sID)
+	err := database.SuccessPaidSubscription(h.db, sID)
+	if err != nil {
+		fmt.Fprintf(w, "error happened contact admin")
+		return
+	}
 	fmt.Fprint(w, templates.GetHomeWithAddOns(templates.SuccessPopUp))
-
 }
 
 func (h *handler) cancel(w http.ResponseWriter, r *http.Request) {

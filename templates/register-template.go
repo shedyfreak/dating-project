@@ -7,11 +7,10 @@ const registerTmpl = `
     <div class="border rounded-lg p-6 shadow-md">
       <h2 class="text-2xl font-bold text-center mb-6">Reservez Votre Place</h2>
       <form 
-        class="space-y-6" 
-        hx-post="/api/register"
-        hx-trigger="submit"
-        hx-swap="none"
-        onsubmit="return validateForm()">
+      class="space-y-6" 
+      hx-post="/api/register"
+      hx-trigger="submit[validateForm()]"
+      hx-swap="none">
         <div class="space-y-2">
           <label for="event" class="block text-sm font-medium text-gray-700">Choisis un évenement</label>
           <select id="event" name="event" required 
@@ -92,51 +91,82 @@ function validateForm() {
   errorElements.forEach(element => element.classList.add('hidden'));
 
   // Get form values
-  const firstName = document.getElementById('first-name').value;
-  const lastName = document.getElementById('last-name').value;
-  const email = document.getElementById('email').value;
-  const phone = document.getElementById('phone').value;
-  const birthdate = document.getElementById('birthdate').value;
+  const firstName = document.getElementById('first-name').value.trim();
+  const lastName = document.getElementById('last-name').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const birthdate = document.getElementById('birthdate').value.trim();
+  const event = document.getElementById('event').value;
+  const sex = document.getElementById('sex').value;
 
   let isValid = true;
 
-  // First and last name validation
-  if (firstName.length > 20) {
+  // Validate first name
+  if (!firstName || firstName.length > 20) {
     document.getElementById('first-name-error').classList.remove('hidden');
     isValid = false;
   }
-  if (lastName.length > 20) {
+
+  // Validate last name
+  if (!lastName || lastName.length > 20) {
     document.getElementById('last-name-error').classList.remove('hidden');
     isValid = false;
   }
 
-  // Email validation
+  // Validate email
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if (!emailPattern.test(email)) {
+  if (!email || !emailPattern.test(email)) {
     document.getElementById('email-error').classList.remove('hidden');
     isValid = false;
   }
 
-  // Phone number validation (Swiss or French numbers only)
+  // Validate phone number
   const phonePattern = /^(\+41|\+33)\s?\d{2}\s?\d{3}\s?\d{4}$/;
-  if (!phonePattern.test(phone)) {
+  if (!phone || !phonePattern.test(phone)) {
     document.getElementById('phone-error').classList.remove('hidden');
     isValid = false;
   }
 
-  // Birthdate validation (ensure user is over 20)
-  const birthdateObj = new Date(birthdate);
-  const today = new Date();
-  const age = today.getFullYear() - birthdateObj.getFullYear();
-  const monthDiff = today.getMonth() - birthdateObj.getMonth();
-  const dayDiff = today.getDate() - birthdateObj.getDate();
+  // Validate birthdate (ensure user is over 20)
+  if (birthdate) {
+    const birthdateObj = new Date(birthdate);
+    const today = new Date();
+    let age = today.getFullYear() - birthdateObj.getFullYear();
+    const monthDiff = today.getMonth() - birthdateObj.getMonth();
+    const dayDiff = today.getDate() - birthdateObj.getDate();
 
-  if (age < 20 || (age === 20 && (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)))) {
+    if (monthDiff < 0 || (monthDiff === 0 && dayDiff < 0)) {
+      age--; // Adjust the age if the current date is before the birthdate
+    }
+
+    if (age < 20) {
+      document.getElementById('birthdate-error').classList.remove('hidden');
+      isValid = false;
+    }
+  } else {
     document.getElementById('birthdate-error').classList.remove('hidden');
     isValid = false;
   }
 
-  return isValid;
+  // Validate event selection
+  if (!event) {
+    document.getElementById('event-error').classList.remove('hidden');
+    isValid = false;
+  }
+
+  // Validate sex selection
+  if (!sex) {
+    document.getElementById('event-error').classList.remove('hidden');
+    isValid = false;
+  }
+
+  // Prevent form submission if any validation fails
+  if (!isValid) {
+    return false;
+  }
+
+  // If everything is valid, allow submission
+  return true;
 }
 </script>
 `

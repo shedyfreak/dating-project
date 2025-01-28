@@ -66,6 +66,16 @@ const registerTmpl = `
             class="block w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 shadow-sm transition duration-150 ease-in-out" />
           <p id="birthdate-error" class="text-red-600 text-sm hidden">Vous devez avoir plus de 20 ans pour vous inscrire.</p>
         </div>
+         <div class="space-y-2">
+          <label for="event" class="block text-sm font-medium text-gray-700">Sexe</label>
+          <select id="sex" name="sex" required 
+            class="block w-full border border-gray-300 rounded-lg py-3 px-4 focus:outline-none focus:ring-2 focus:ring-pink-500 focus:border-pink-500 shadow-sm transition duration-150 ease-in-out">
+            <option value="" disabled selected>Choisis ton sexe</option>
+            <option value="male">Homme</option>
+            <option value="female">Femme</option>
+          </select>
+          <p id="event-error" class="text-red-600 text-sm hidden">Veuillez choisir ton sexe</p>
+        </div>
 
         <button type="submit" class="w-full bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-opacity-50 transition duration-150 ease-in-out">
           Réserver ma place

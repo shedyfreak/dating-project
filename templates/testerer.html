@@ -1,0 +1,29 @@
+<div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden" id="modal-full-event-{{.ID}}">
+    <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-lg">
+        <div class="mb-4">
+            <h2 class="text-2xl font-bold text-pink-600" id="event-name">{{.Name}}</h2>
+        </div>
+        <div class="space-y-4">
+            <div>
+                <h3 class="text-lg font-semibold text-pink-500">Location:</h3>
+                <p class="text-gray-700" id="event-location">{{.EventLocation}}</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-pink-500">Date and Time:</h3>
+                <p class="text-gray-700" id="event-date-time">{{.Date}} - {{.Time}}</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-pink-500">Description:</h3>
+                <p class="text-gray-700" id="event-description">Event Long Description</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-pink-500">Age Range:</h3>
+                <p class="text-gray-700" id="event-age-range">Age Range</p>
+            </div>
+        </div>
+        <div class="mt-6 flex justify-between">
+            <button id="register-button" class="bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600">Register</button>
+            <button id="close-button-full-event" class="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400">Close</button>
+        </div>
+    </div>
+</div>

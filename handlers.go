@@ -22,20 +22,37 @@ func (h *handler) homeHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, templates.GetHomeWithAddOns())
 }
 
+func (h *handler) contactPageHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, templates.GetHomeWithAddOns(templates.ContactPageTempl))
+}
 func (h *handler) eventsHandler(w http.ResponseWriter, r *http.Request) {
-	events := database.GetEvents(h.db)
+	events, err := database.GetEvents(h.db)
+	if err != nil {
+		fmt.Fprintf(w, templates.GetHomeWithAddOns(templates.ErrTemplate))
+		return
+	}
 	res := templates.ParseEvents(events)
 
 	fmt.Fprintf(w, res)
 }
 
 func (h *handler) eventsOptions(w http.ResponseWriter, r *http.Request) {
-	events := database.GetEvents(h.db)
+	events, err := database.GetEvents(h.db)
+	if err != nil {
+		fmt.Fprintf(w, templates.GetHomeWithAddOns(templates.ErrTemplate))
+		return
+	}
 	res := templates.GetOptionsEvent(events)
 	fmt.Fprintf(w, res)
 }
 
 func (h *handler) registrationHandler(w http.ResponseWriter, r *http.Request) {
+	var err error
+	defer func(err error) {
+		if err != nil {
+			fmt.Fprintf(w, templates.GetHomeWithAddOns(templates.ErrTemplate))
+		}
+	}(err)
 	// Ensure the method is POST
 	if r.Method != http.MethodPost {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
@@ -53,11 +70,13 @@ func (h *handler) registrationHandler(w http.ResponseWriter, r *http.Request) {
 	firstName := r.FormValue("first_name")
 	familyName := r.FormValue("last_name")
 	email := r.FormValue("email")
+	sex := r.FormValue("sex")
 	phone := r.FormValue("phone")
 	birthdate := r.FormValue("birthdate")
 	parsedTime, err := time.Parse(time.DateOnly, birthdate)
 	if err != nil {
-		log.Fatalln("Error parsing date:", err)
+		log.Println("Error parsing date:", err)
+		return
 	}
 	subscriber := database.Subsriber{
 		FirstName:   firstName,
@@ -65,10 +84,27 @@ func (h *handler) registrationHandler(w http.ResponseWriter, r *http.Request) {
 		Email:       email,
 		PhoneNumber: phone,
 		Birthday:    database.DateOnly(parsedTime),
+		Sex:         sex,
 	}
 	err, subID := database.SaveSubscriber(h.db, subscriber)
 	if err != nil {
-		fmt.Fprint(w, "something went wrong contac ADMIN")
+		fmt.Fprintf(w, templates.GetHomeWithAddOns(templates.ErrTemplate))
+		return
+	}
+	evID, err := strconv.Atoi(eventID)
+	if err != nil {
+		fmt.Fprintf(w, templates.GetHomeWithAddOns(templates.ErrTemplate))
+		return
+	}
+
+	ok, _, _, err := database.GetEligibleBySex(h.db, uint(evID), sex)
+	if err != nil {
+		fmt.Fprintf(w, templates.GetHomeWithAddOns(templates.ErrTemplate))
+		return
+	}
+	if !ok {
+		fmt.Fprintf(w, templates.GetHomeWithAddOns(templates.ErrTemplate))
+		return
 	}
 
 	domain := "http://localhost:8080"
@@ -88,11 +124,7 @@ func (h *handler) registrationHandler(w http.ResponseWriter, r *http.Request) {
 	s, err := session.New(params)
 	if err != nil {
 		log.Printf("session.New: %v", err)
-	}
-
-	evID, err := strconv.Atoi(eventID)
-	if err != nil {
-		fmt.Fprint(w, "something went wrong contac ADMIN")
+		return
 	}
 
 	database.SaveTempSubscription(h.db, uint(evID), subID, s.ID)
@@ -103,11 +135,12 @@ func (h *handler) registrationHandler(w http.ResponseWriter, r *http.Request) {
 
 func (h *handler) success(w http.ResponseWriter, r *http.Request) {
 	sID := r.URL.Query().Get("session_id")
-	err := database.SuccessPaidSubscription(h.db, sID)
+	sub, event, err := database.SuccessPaidSubscription(h.db, sID)
 	if err != nil {
 		fmt.Fprintf(w, "error happened contact admin")
 		return
 	}
+	sendEmail(event, sub)
 	fmt.Fprint(w, templates.GetHomeWithAddOns(templates.SuccessPopUp))
 }
 

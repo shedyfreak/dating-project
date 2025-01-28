@@ -12,7 +12,7 @@ func main() {
 	stripe.Key = "sk_test_51Qg0zKBgG9LkRx4rH0FZgS6Dk0eSv4m4Qh1i7YrAp69JXgJGVHPbMrOFCUY1qJdpIE5aKKHehMBmw51UEICY5VeW00l7RQs0po"
 	db, err := database.DBinit()
 	if err != nil {
-		log.Fatal("cannot init database, reason -> %s", err.Error())
+		log.Println("cannot init database, reason -> %s", err.Error())
 		panic("db failure")
 	}
 

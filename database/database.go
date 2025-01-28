@@ -14,14 +14,14 @@ func DBinit() (*sqlx.DB, error) {
 	// Open connection
 	db, err := sqlx.Open("postgres", connStr)
 	if err != nil {
-		log.Fatal("Error opening database connection:", err)
+		log.Println("Error opening database connection:", err)
 		return nil, err
 	}
 
 	// Verify the connection is alive
 	err = db.Ping()
 	if err != nil {
-		log.Fatal("Error connecting to the database:", err)
+		log.Println("Error connecting to the database:", err)
 		return nil, err
 	}
 	return db, nil

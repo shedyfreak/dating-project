@@ -1,6 +1,6 @@
 package templates
 
-const errTemplate = ` <div class="max-w-md w-full p-4">
+const ErrTemplate = ` <div class="max-w-md w-full p-4">
     <!-- Notification Container -->
     <div class="flex items-start bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg shadow-md" role="alert">
       <!-- Icon -->
@@ -10,7 +10,7 @@ const errTemplate = ` <div class="max-w-md w-full p-4">
       <!-- Message -->
       <div>
         <strong class="font-semibold">Erreur:</strong>
-        <span class="block sm:inline">{{ErrorMessage}} - {{Contact}} </span>
+        <span class="block sm:inline">Contact Support on customer@affinitys.ch </span>
       </div>
       <!-- Close Button -->
       <button class="ml-auto text-red-500 hover:text-red-700 focus:outline-none" aria-label="Close">

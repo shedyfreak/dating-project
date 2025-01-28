@@ -7,24 +7,28 @@ import (
 )
 
 type Event struct {
-	ID           uint     `db:"id"`
-	Name         string   `db:"name"`
-	Location     string   `db:"location"`
-	Date         DateOnly `db:"date"` // Implemets String() for tmpl
-	Time         TimeOnly `db:"time"` // Implemets String() for tmpl
-	Price        float32  `db:"price"`
-	Description  string   `db:"description"`
-	Icon         string   `db:"icon"`
-	MapsLink     string   `db:"maps_link"`
-	MaxSubsCount int      `db:"max_subs_count"`
+	ID              uint     `db:"id"`
+	Name            string   `db:"name"`
+	Location        string   `db:"location"`
+	Date            DateOnly `db:"date"` // Implemets String() for tmpl
+	Time            TimeOnly `db:"time"` // Implemets String() for tmpl
+	Price           float32  `db:"price"`
+	Description     string   `db:"description"`
+	Icon            string   `db:"icon"`
+	MapsLink        string   `db:"maps_link"`
+	MaxSubsCount    int      `db:"max_subs_count"`
+	LongDescription string   `db:"long_description"`
+	MinAge          int      `db:"min_age"`
+	MaxAge          int      `db:"max_age"`
 }
 type Subsriber struct {
 	ID          uint     `db:"id"`
-	FirstName   string   `db:"fist_name"`
+	FirstName   string   `db:"first_name"`
 	FamilyName  string   `db:"family_name"`
 	Birthday    DateOnly `db:"birthday"` // Implemets String() for tmpl
 	Email       string   `db:"email"`    // Implemets String() for tmpl
 	PhoneNumber string   `db:"phone_number"`
+	Sex         string   `db:"sex"`
 }
 
 type EventSubscription struct {

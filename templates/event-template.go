@@ -1,6 +1,33 @@
 package templates
 
-const allEvsTempl = `<section class="px-4 py-16  max-w-screen-lg mx-auto">
+const allEvsTempl = `<!-- EVENTS SECTION -->
+<script>
+    htmx.defineExtension('show', {
+        onEvent: function (el) {
+            const targetSelector = el.getAttribute('hx-target');
+            const modal = document.querySelector(targetSelector);
+            if (modal) {
+                modal.classList.remove('hidden');
+            } else {
+                console.error("No element found for selector: ${targetSelector}");
+            }
+        }
+    });
+    htmx.defineExtension('hide', {
+        onEvent: function (el) {
+            const targetSelector = el.getAttribute('hx-target');
+            const modal = document.querySelector(targetSelector);
+            if (modal) {
+                modal.classList.add('hidden');
+            } else {
+                console.error("No element found for selector: ${targetSelector}");
+            }
+        }
+    });
+</script>
+
+
+<section class="px-4 py-16  max-w-screen-lg mx-auto">
   <h2 class="text-3xl font-bold text-center mb-12">Événements à venir</h2>
   
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -50,8 +77,8 @@ const EventTempl = `
       
       <!-- Action Button -->
       <div class="mt-6 flex justify-center">
-        <button class="px-6 py-2 bg-pink-600 text-white rounded-lg font-semibold hover:bg-pink-700 transition duration-200">
-          Register Now
+        <button  hx-on="click: document.querySelector('#modal-{{.ID}}').classList.remove('hidden')" class="px-6 py-2 bg-pink-600 text-white rounded-lg font-semibold hover:bg-pink-700 transition duration-200">
+         Plus d'informations
         </button>
       </div>
     </div>
@@ -61,5 +88,39 @@ const EventTempl = `
       <img src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/2d/72/a4/3f/caption.jpg" alt="Event Image" class="w-full h-full object-cover rounded-lg transform hover:scale-110 transition duration-300" />
     </div>
   </div>
+</div>
+` + FullDescModal
+
+const FullDescModal = `
+<!-- Modal -->
+<div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden" id="modal-{{.ID}}">
+    <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-lg">
+        <div class="mb-4">
+            <h2 class="text-2xl font-bold text-pink-600" id="event-name">{{.Name}}</h2>
+        </div>
+        <div class="space-y-4">
+            <div>
+                <h3 class="text-lg font-semibold text-pink-500">Location:</h3>
+                <p class="text-gray-700" id="event-location">{{.Location}}</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-pink-500">Date and Time:</h3>
+                <p class="text-gray-700" id="event-date-time">{{.Date}} - {{.Time}}</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-pink-500">Description:</h3>
+                <p class="text-gray-700" id="event-description">{{.LongDescription}}</p>
+            </div>
+            <div>
+                <h3 class="text-lg font-semibold text-pink-500">Age Range:</h3>
+                <p class="text-gray-700" id="event-age-range">{{.MinAge}} - {{.MaxAge}}</p>
+            </div>
+        </div>
+        <div class="mt-6 flex justify-between">
+            <button id="register-button" class="bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600">Register</button>
+            <button class="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400"
+                     hx-on="click: document.querySelector('#modal-{{.ID}}').classList.add('hidden')">Close</button>
+        </div>
+    </div>
 </div>
 `

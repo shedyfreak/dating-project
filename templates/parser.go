@@ -18,7 +18,7 @@ func ParseEvents(events []database.Event) string {
 	for _, event := range events {
 		tmpl, err := template.New("name").Parse(EventTempl)
 		if err != nil {
-			log.Fatal("Failed to parse event template")
+			log.Println("Failed to parse event template")
 		}
 		buf := &bytes.Buffer{}
 		err = tmpl.Execute(buf, event)
@@ -38,7 +38,7 @@ func GetOptionsEvent(events []database.Event) string {
 		tpl = fmt.Sprintf(`<option value="%d">{{.Date}} - {{.Name}} </option>`, event.ID)
 		tmpl, err := template.New("name").Parse(tpl)
 		if err != nil {
-			log.Fatal("Failed to parse event template")
+			log.Println("Failed to parse event template")
 		}
 		buf := &bytes.Buffer{}
 		err = tmpl.Execute(buf, event)

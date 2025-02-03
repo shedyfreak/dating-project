@@ -94,7 +94,7 @@ const EventTempl = `
 const FullDescModal = `
 <!-- Modal -->
 <div class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden" id="modal-{{.ID}}">
-    <div class="bg-white rounded-2xl shadow-lg p-6 w-full max-w-lg">
+    <div class="bg-white text-left rounded-2xl shadow-lg p-6 w-full max-w-lg">
         <div class="mb-4">
             <h2 class="text-2xl font-bold text-pink-600" id="event-name">{{.Name}}</h2>
         </div>
@@ -117,7 +117,9 @@ const FullDescModal = `
             </div>
         </div>
         <div class="mt-6 flex justify-between">
-            <button id="register-button" class="bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600">Register</button>
+            <button id="register-button" class="bg-pink-500 text-white py-2 px-4 rounded-lg hover:bg-pink-600"
+                    hx-on="click: document.querySelector('#modal-{{.ID}}').classList.add('hidden'); 
+                    document.querySelector('#register-section').scrollIntoView({ behavior: 'smooth' })">Register</button>
             <button class="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400"
                      hx-on="click: document.querySelector('#modal-{{.ID}}').classList.add('hidden')">Close</button>
         </div>

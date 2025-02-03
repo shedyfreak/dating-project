@@ -2,7 +2,7 @@ package templates
 
 const registerTmpl = `
 <!-- Reserve Spot Section -->
-<section class="px-4 py-16">
+<section id="register-section" class="px-4 py-16">
   <div class="container mx-auto max-w-xl">
     <div class="border rounded-lg p-6 shadow-md">
       <h2 class="text-2xl font-bold text-center mb-6">Reservez Votre Place</h2>
